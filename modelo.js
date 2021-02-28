@@ -77,7 +77,12 @@ class Relacion {
 }
 
 export class Modelo {
-    constructor() {
+    /**
+     * 
+     * @param {string} nombre 
+     */
+    constructor(nombre) {
+        this.nombre = nombre;
         /**
          * @type {[Campo]}
          */

@@ -4,7 +4,7 @@ import { Modelo } from "./modelo.js";
 import { CampoW3CSS } from "./w3css/modelow3.js";
 import { Peticion } from "./request.js";
 
-let modelo = new Modelo();
+let modelo = new Modelo('Persona');
 modelo.campos.push(new CampoW3CSS('id', 'Id', 'NUMBER', 'disabled'));
 modelo.campos.push(new CampoW3CSS('nombre', 'Nombre', 'TEXT', 'required|pattern="[a-zA-Z ñÑ]{3,}"|title="Se requiere 3 o más caracteres[a-z] "'));
 modelo.campos.push(new CampoW3CSS('paterno', 'Apellido paterno', 'TEXT', 'required|minlength="5"'));

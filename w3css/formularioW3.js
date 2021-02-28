@@ -2,7 +2,7 @@ import { Modelo } from "../modelo.js";
 import { Peticion } from "../request.js";
 
 const template = /*html*/`
-    <form class="w3-container">
+    <form class="">        
         <div id="contenido"></div>
         <div help class="w3-row w3-padding"></div>
         <div class="w3-row w3-padding">
@@ -30,9 +30,15 @@ class FormularioW3 extends HTMLElement{
         super();
     }
 
+
+
     render() {
         let shadowRoot = this.attachShadow({mode:'open'});
         let lib = '';
+        let titulo = 'Añadir';
+        if (this.hasAttribute('id')) {
+            titulo = 'Editar';
+        }
         if (this.tema) {
             lib=`<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-${this.tema}.css">
             `
@@ -44,6 +50,7 @@ class FormularioW3 extends HTMLElement{
             <link rel="stylesheet" href="http://localhost/saul/lib/css/w3.css">
             ${lib}
             <style>${style}</style>
+            <h3 class="w3-container w3-text-theme">${titulo} ${this.modelo.nombre}</h3>
             ${template}
         `;
         this.addListenerCancelar();

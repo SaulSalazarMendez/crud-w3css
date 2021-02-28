@@ -19,7 +19,8 @@ class VerW3 extends HTMLElement{
         }
         shadowRoot.innerHTML = /*html*/`
             <link rel="stylesheet" href="http://localhost/saul/lib/css/w3.css">            
-            ${lib}                    
+            ${lib}  
+            <h3 class="w3-container w3-text-theme">Ver ${this.modelo.nombre}</h3>                  
             ${template}
         `;
     }
