@@ -149,22 +149,25 @@ class FormularioW3 extends HTMLElement{
      * @param {HTMLInputElement} input 
      */
     validaInput(input) {
-        let help = this.shadowRoot.querySelector('#error-'+input.name);
+        let help = this.shadowRoot.querySelector('#error-'+input.name);        
         if (input.validity.valid) {
-            help.innerHTML = ``
+            help.innerHTML = ``;
+            help.classList.remove('w3-animate-left');
         } else {
             let label = this.shadowRoot.querySelector(`[for="${input.name}"]`).innerHTML;
             if (input.validity.patternMismatch) {
                 if (input.hasAttribute('title')) {
                     help.innerHTML = `<i class="bi bi-x-circle"></i> ${label}: ${input.getAttribute('title')}<br>`;
+                    help.classList.add('w3-animate-left');
                     return;
                 }                
             }
             help.innerHTML = `<i class="bi bi-x-circle"></i>  ${label}: ${input.validationMessage}<br>`
+            help.classList.add('w3-animate-left');
         }
     }
     
-    addEventsInputs(contenido, entradas) {
+    addEventsInputs(contenido, entradas) {        
         for(let input of entradas) {
             input.addEventListener('invalid', ev => {         
                 ev.preventDefault();
