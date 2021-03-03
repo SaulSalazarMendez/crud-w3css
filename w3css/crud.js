@@ -83,11 +83,11 @@ class CrudW3 extends HTMLElement {
         <tabla-crud tema="${this.tema}" titulo="${this.titulo}"></tabla-crud>
         `;
         let tabla = contenido.querySelector('tabla-crud');
-        tabla.setAcciones(this.acciones);
-        console.log(this.estadoTabla);
+        tabla.setAcciones(this.acciones);        
         if (this.estadoTabla) {
             tabla.setEstado(this.estadoTabla);
         }
+        tabla.setOnListar(this.onListar);
         tabla.carga(this.modelo);
         tabla.addEventListener('accion', ev=> {
             this.analizaEvento(ev);

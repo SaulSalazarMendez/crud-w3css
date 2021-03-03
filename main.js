@@ -16,4 +16,16 @@ modelo.setId('id');
 
 let crud = document.querySelector('crud-w3css');
 crud.setAcciones({editar: false, eliminar:false});
+crud.setOnListar((estado) => {    
+    return new Promise( (resolve,reject) => {
+        let p = new Peticion();
+        p.list(
+            estado.offset,
+            estado.limit, 
+            estado.ordenar).then(datos => {            
+            resolve(datos);
+        });
+        
+    });
+});
 crud.setModelo(modelo);

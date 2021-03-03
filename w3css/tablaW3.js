@@ -44,6 +44,10 @@ class TablaW3 extends HTMLElement{
                 orden: 'none'
             }
         }
+        /**
+         * @type {function(): Promise<any>}
+         */
+        this.onListar = null;        
     }
 
     setEstado(estado) {
@@ -75,6 +79,10 @@ class TablaW3 extends HTMLElement{
                 <paginador-w3 tema="${this.tema}"></paginador-w3>
             </div>     
         `;
+    }
+
+    setOnListar(onListar) {
+        this.onListar = onListar;
     }
     /**
      * 
@@ -134,14 +142,9 @@ class TablaW3 extends HTMLElement{
             icono.classList.add('gg-bolt');
         }
     }    
-    cargarDatos() {
-        let p = new Peticion();  
-        console.log(this.estado.ordenar.orden)      
-        p.list(
-            this.estado.offset,
-            this.estado.limit, 
-            this.estado.ordenar).then(datos => {            
-                this.loadDatos(datos);
+    cargarDatos() {        
+        this.onListar(this.estado).then( data => {
+            this.loadDatos(data);
         });
     }
     /**
