@@ -28,4 +28,23 @@ crud.setOnListar((estado) => {
         
     });
 });
+
+crud.setOnVer((id) => {    
+    return new Promise( (resolve, reject) => {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+            .then(data => {return data.json()})
+            .then(json => {
+            let url = json.sprites.other.dream_world.front_default
+            if (url == null){
+                url = json.sprites.other["official-artwork"].front_default;
+            }
+            resolve({
+                id: json.id,
+                name: json.name,
+                url: url
+            })
+        });
+    });
+});
+
 crud.setModelo(modelo);

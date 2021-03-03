@@ -40,7 +40,7 @@ class CrudW3 extends HTMLElement {
         this.estadoTabla = null;
 
         this.onListar = null;
-        this.onGet = null;
+        this.onVer = null;
         this.onEditar = null;
         this.onAgregar = null;
         this.onEliminar = null;
@@ -101,8 +101,8 @@ class CrudW3 extends HTMLElement {
         contenido.innerHTML = `
         <ver-dato-crud id="${info.id}" tema="${this.tema}"></ver-dato-crud>
         `;
-        let ver = contenido.querySelector('ver-dato-crud');
-        ver.carga(this.modelo);
+        let ver = contenido.querySelector('ver-dato-crud');        
+        ver.carga(this.modelo, this.onVer);
         ver.addEventListener('accion', ev=> {            
             this.analizaEvento(ev);
         });
@@ -147,8 +147,8 @@ class CrudW3 extends HTMLElement {
         this.onAgregar = onAgregar;
     }
 
-    setOnGet( onGet ){
-        this.onGet = onGet;
+    setOnVer( onVer ){        
+        this.onVer = onVer;
     }
 
     setOnEditar( onEditar ){

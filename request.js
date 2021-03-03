@@ -42,17 +42,7 @@ export class Peticion{
                         url: url
                     })
                 });
-        });     
-        
-        // return new Promise((resolve,reject) => {
-            
-        //     for(let d of arrDatos) {
-        //         if (d.id == id) {
-        //             resolve(clonar(d));                    
-        //         }
-        //     }
-        //     resolve(d);
-        // });
+        });
     }
 
     edit(id, data) {

@@ -23,18 +23,20 @@ class VerW3 extends HTMLElement{
             <h3 class="w3-container w3-text-theme">Ver ${this.modelo.nombre}</h3>                  
             ${template}
         `;
+        /**
+         * @type {function}
+         */        
     }
     /**
      * 
      * @param {Modelo} modelo 
      */
-    carga(modelo) {
+    carga(modelo, onVer) {
         this.modelo = modelo;
         this.tema = this.getAttribute('tema');        
         this.render();
-        this.id = this.getAttribute('id');
-        let p = new Peticion();
-        p.get(this.id).then(data => {
+        this.id = this.getAttribute('id');        
+        onVer(this.id).then(data => {
             this.loadDato(data);
         });
     }
