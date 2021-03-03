@@ -26,7 +26,8 @@ class CrudW3 extends HTMLElement {
             editar: true,
             clonar: true,
             eliminar: true,
-        },
+            agregar: true
+        };
         /**
          * lista de campos visibles si no se especifica se toman todos
          */
@@ -35,6 +36,18 @@ class CrudW3 extends HTMLElement {
          * lista de campos de formulario si no se especifica se toman todos.
          */
         this.camposFormulario = [];
+
+        this.estadoTabla = null;
+
+        this.onListar = null;
+        this.onGet = null;
+        this.onEditar = null;
+        this.onAgregar = null;
+        this.onEliminar = null;
+    }
+
+    setAcciones(acciones = {}) {
+        Object.assign(this.acciones, acciones); 
     }
     /**
      * Setea tabla
@@ -70,9 +83,17 @@ class CrudW3 extends HTMLElement {
         <tabla-crud tema="${this.tema}" titulo="${this.titulo}"></tabla-crud>
         `;
         let tabla = contenido.querySelector('tabla-crud');
+        tabla.setAcciones(this.acciones);
+        console.log(this.estadoTabla);
+        if (this.estadoTabla) {
+            tabla.setEstado(this.estadoTabla);
+        }
         tabla.carga(this.modelo);
         tabla.addEventListener('accion', ev=> {
             this.analizaEvento(ev);
+        });
+        tabla.addEventListener('estado', ev=> {
+            this.estadoTabla = ev.detail.estado;
         });
     }
     addVer(info) {
@@ -116,6 +137,26 @@ class CrudW3 extends HTMLElement {
         if (info.tipo == 'nuevo') {
             this.addFormulario(info);
         }
+    }
+
+    setOnListar( onListar ){
+        this.onListar = onListar;
+    }
+
+    setOnAgregar( onAgregar ){
+        this.onAgregar = onAgregar;
+    }
+
+    setOnGet( onGet ){
+        this.onGet = onGet;
+    }
+
+    setOnEditar( onEditar ){
+        this.onEditar = onEditar;
+    }
+
+    setOnEliminar( onEliminar ){
+        this.onEliminar = onEliminar;
     }
 
 }

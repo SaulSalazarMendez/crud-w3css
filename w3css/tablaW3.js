@@ -27,8 +27,32 @@ const style = `
 
 class TablaW3 extends HTMLElement{
     constructor() {
-        super();        
-    }    
+        super();
+        this.acciones = {
+            ver: true,
+            editar: true,
+            clonar: true,
+            eliminar: true,
+            agregar: true
+        };
+
+        this.estado = {
+            offset: 0,
+            limit: 10,
+            ordenar: {
+                campo: 'none',
+                orden: 'none'
+            }
+        }
+    }
+
+    setEstado(estado) {
+        this.estado = estado;
+    }
+    
+    setAcciones(acciones = {}) {
+        Object.assign(this.acciones, acciones); 
+    }
 
     render() {
         let shadowRoot = this.attachShadow({mode:'open'});
@@ -64,11 +88,27 @@ class TablaW3 extends HTMLElement{
         this.tituloAdd = this.shadowRoot.querySelector('#titulo-add');
         this.tituloAdd.innerHTML = this.titulo;  
         this.cargaTitulos();    
-        let p = new Peticion();
-        p.list().then(datos => {            
-            this.loadDatos(datos);
-        });
+        this.cargarDatos();
         this.addEventoNuevo();
+        this.addEventosPaginador();
+    }
+
+    addEventosPaginador() {
+        let pag = this.shadowRoot.querySelector('paginador-w3');
+        pag.addEventListener('siguiente', ev => {
+            this.paginaDatos(1);
+        });
+        pag.addEventListener('anterior', ev => {
+            this.paginaDatos(-1);
+        });
+    }
+
+    paginaDatos(inc) {
+        let offset = this.estado.offset + inc*this.estado.limit;
+        if (offset < 0) {offset = 0;}
+        this.estado.offset = offset;
+        this.despachaEventoEstado();
+        this.cargarDatos();
     }
 
     addEventoNuevo() {
@@ -93,13 +133,16 @@ class TablaW3 extends HTMLElement{
             icono.classList.remove('gg-chevron-down');
             icono.classList.add('gg-bolt');
         }
-    }
-    /**
-     * Emite el evento de ordenar indicando que campo se tomara como referencia o null 
-     * y la página correspondiente en la que se encuentra el páginador
-     */
-    emiteEventoOrdenar() {
-
+    }    
+    cargarDatos() {
+        let p = new Peticion();  
+        console.log(this.estado.ordenar.orden)      
+        p.list(
+            this.estado.offset,
+            this.estado.limit, 
+            this.estado.ordenar).then(datos => {            
+                this.loadDatos(datos);
+        });
     }
     /**
      * 
@@ -110,17 +153,22 @@ class TablaW3 extends HTMLElement{
         for(let item of titulos) {     
             item.addEventListener('click', ev=> {
                 let icono = item.querySelector('#icono');
+                let campo = item.getAttribute('nombre');
                 let clase = 'gg-chevron-up';
+                let orden = 'des';
                 if (icono.classList.contains('gg-chevron-up')) {
                     clase = 'gg-chevron-down'
+                    orden = 'asc';
                 } else if (icono.classList.contains('gg-chevron-down')) {
                     clase = 'gg-bolt';
-                }                
+                    orden = 'none';
+                }
                 this.removerTitulos(titulos);
                 icono.classList.remove('gg-bolt');
                 icono.classList.add(clase);
-                //emitir evento de ordenar
-                console.log(item.getAttribute('nombre'));
+                this.estado.ordenar = {orden: orden, campo: campo};
+                this.despachaEventoEstado();
+                this.cargarDatos();
             });              
         }
         //'gg-chevron-down'
@@ -137,6 +185,13 @@ class TablaW3 extends HTMLElement{
         this.addEventosTitulos(titulo);
     }
 
+    validaCadena(cadena) {
+        if (cadena == undefined) {
+            return '';
+        }
+        return cadena;
+    }
+
     /**
      * 
      * @param {[string]} data 
@@ -144,9 +199,26 @@ class TablaW3 extends HTMLElement{
     renderDataColTabla(data) {
         let out = '';
         for(let campo of this.modelo.campos) {
-            out += `<td>${ data[campo.nombre]}</td>`;
+            out += `<td>${ this.validaCadena(data[campo.nombre])}</td>`;
         }
         return out;
+    }
+
+    getAcciones(data) {
+        let acciones = '';
+        if (this.acciones.ver) {
+            acciones = /*html*/`<a href="#" class="w3-bar-item w3-button w3-hover-theme" id="${data[this.modelo.id]}" tipo="ver">
+            <i class="bi bi-search"></i> Ver</a>`;
+        }
+        if (this.acciones.editar) {
+            acciones += /*html*/`<a href="#" class="w3-bar-item w3-button w3-hover-theme" id="${data[this.modelo.id]}" tipo="editar">
+            <i class="bi bi-pencil"></i> Editar</a> `;
+        }
+        if (this.acciones.eliminar) {
+            acciones += /*html*/`<a href="#" class="w3-bar-item w3-button w3-hover-theme" id="${data[this.modelo.id]}" tipo="eliminar">
+            <i class="bi bi-trash"></i> Eliminar</a>`;
+        }
+        return acciones;
     }
 
     renderDataAcciones(data) {
@@ -154,12 +226,7 @@ class TablaW3 extends HTMLElement{
         <div class="w3-dropdown-hover">
         <button class="w3-button w3-theme-action w3-hover-theme"><i class="bi bi-gear-fill"></i></button>
         <div class="w3-dropdown-content w3-bar-block w3-card-4">
-        <a href="#" class="w3-bar-item w3-button w3-hover-theme" id="${data[this.modelo.id]}" tipo="ver">
-            <i class="bi bi-search"></i> Ver</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-theme" id="${data[this.modelo.id]}" tipo="editar">
-            <i class="bi bi-pencil"></i> Editar</a>        
-        <a href="#" class="w3-bar-item w3-button w3-hover-theme" id="${data[this.modelo.id]}" tipo="eliminar">
-            <i class="bi bi-trash"></i> Eliminar</a>
+        ${this.getAcciones(data)}        
         </div>
         </div>
         </td>
@@ -171,7 +238,7 @@ class TablaW3 extends HTMLElement{
     loadDatos(datos) {
         let contenidoTabla = this.shadowRoot.querySelector('#contenido-tabla');
         let datatable = '';
-        for(let data of datos) {    
+        for(let data of datos.items) {    
             datatable += /*html*/`
             <tr>
                 ${this.renderDataColTabla(data)}
@@ -203,6 +270,19 @@ class TablaW3 extends HTMLElement{
             detail: {
                 tipo: item.getAttribute('tipo'),
                 id: item.getAttribute('id')
+            }
+        });
+        this.dispatchEvent(evento);
+    }
+
+    /**
+     * 
+     * @param {HTMLElement} item 
+     */
+    despachaEventoEstado() {
+        let evento = new CustomEvent('estado', {
+            detail: {
+                estado: this.estado
             }
         });
         this.dispatchEvent(evento);

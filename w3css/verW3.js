@@ -39,13 +39,22 @@ class VerW3 extends HTMLElement{
         });
     }
 
+    getDato(data, campo) {        
+        if(campo.innerHtml) {
+            let text = campo.innerHtml + '';
+            let reg = new RegExp(`{${campo.nombre}}`, 'g');
+            return text.replace(reg, data[campo.nombre]);
+        }
+        return data[campo.nombre];
+    }
+
     loadDato(data) {
         let contenido = this.shadowRoot.querySelector('[contenido]');
         let out = '';
         for(let campo of this.modelo.campos) {
             out+= /*html*/`
                 <label class=""><b>${campo.etiqueta}</b></label>
-                <div class="w3-border">${data[campo.nombre]}</div>                
+                <div class="w3-border">${this.getDato(data, campo)}</div>                
             `;
         }
         out += `

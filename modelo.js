@@ -12,7 +12,15 @@ export class Campo{
         this.etiqueta = etiqueta
         this.tipo = tipo;
         this.rules = rules; 
-        this.helptext = helptext;          
+        this.helptext = helptext;
+        this.innerHtml = null;
+    }
+    /**
+     * 
+     * @param {string} codigo 
+     */
+    setInnerHtml(codigo) {
+        this.innerHtml = codigo;
     }
 
     getRules() {        
