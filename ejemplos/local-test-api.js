@@ -25,7 +25,7 @@ function peticionPost(url, dato) {
 
 let modelo = new Modelo('Test');
 modelo.campos.push(new CampoW3CSS('tabla_id', 'Id', 'NUMBER', 'disabled'));
-modelo.campos.push(new CampoW3CSS('log', 'Log', 'TEXT'));
+modelo.campos.push(new CampoW3CSS('log', 'Log', 'TEXT', 'required|pattern="[a-z]{4,}"'));
 modelo.setId('tabla_id');
 
 /**

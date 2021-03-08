@@ -122,6 +122,8 @@ class TablaW3 extends HTMLElement{
         }
         this.despachaEventoEstado();
         this.cargarDatos();
+        let pag = this.shadowRoot.querySelector('paginador-w3');
+        pag.setPagina(this.estado.offset/this.estado.limit +1);
     }
 
     addEventoNuevo() {
