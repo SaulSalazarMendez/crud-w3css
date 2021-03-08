@@ -68,7 +68,7 @@ class CrudW3 extends HTMLElement {
             `
         }
         shadowRoot.innerHTML = /*html*/`
-            <link rel="stylesheet" href="http://localhost/saul/lib/css/w3.css">
+            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             ${lib}            
             <div class="w3-container">
                 <h3 class="w3-theme w3-center"><b>${this.titulo}</b></h3>

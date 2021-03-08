@@ -1,7 +1,6 @@
-import '../w3css/crud.js';
+import '../w3css/crudW3.js';
 
-import { Modelo } from "../modelo.js";
-import { CampoW3CSS } from "../w3css/modelow3.js";
+import { Campo, Modelo } from "../modelo.js";
 
 function peticionGet(url) {
     return fetch(url).then(data => {return data.json()});
@@ -24,8 +23,8 @@ function peticionPost(url, dato) {
 }
 
 let modelo = new Modelo('Test');
-modelo.campos.push(new CampoW3CSS('tabla_id', 'Id', 'NUMBER', 'disabled'));
-modelo.campos.push(new CampoW3CSS('log', 'Log', 'TEXT', 'required|pattern="[a-z]{4,}"'));
+modelo.campos.push(new Campo('tabla_id', 'Id', 'NUMBER', 'disabled'));
+modelo.campos.push(new Campo('log', 'Log', 'TEXT', 'required|pattern="[a-z]{4,}"'));
 modelo.setId('tabla_id');
 
 /**

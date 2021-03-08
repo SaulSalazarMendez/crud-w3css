@@ -1,5 +1,6 @@
 import { Modelo } from "../modelo.js";
 import { Peticion } from "../request.js";
+import { renderW3 } from "./renderW3.js";
 
 const template = /*html*/`
     <form class="">        
@@ -78,6 +79,15 @@ class FormularioW3 extends HTMLElement{
             help.innerHTML += `<label class="w3-tag w3-theme-dark w3-margin-top w3-round" id="error-${campo.nombre}" for="${campo.nombre}"></label><br>`;
         }
     }
+
+    renderModelo(modelo) {
+        let out = '';
+        console.log(modelo);
+        for(let campo of modelo.campos) {
+            out += renderW3(campo);
+        }
+        return out;
+    }
     /**
      * 
      * @param {Modelo} modelo 
@@ -92,7 +102,7 @@ class FormularioW3 extends HTMLElement{
          */
         let form = this.shadowRoot.querySelector('form');
         let contenido = form.querySelector('div');
-        contenido.innerHTML = modelo.render();
+        contenido.innerHTML =this.renderModelo(modelo);
         let entradas = contenido.querySelectorAll('[entrada]');   
         this.addEventsInputs(contenido, entradas);
         if (this.hasAttribute('id')) {            

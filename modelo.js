@@ -101,14 +101,6 @@ export class Modelo {
          */
         this.relaciones = [];
     }
-
-    render() {
-        let out = '';
-        for(let campo of this.campos) {
-            out += campo.render();
-        }
-        return out;
-    }
     /**
      * 
      * @param {string} id 

@@ -1,13 +1,12 @@
-import '../w3css/crud.js';
+import '../w3css/crudW3.js';
 
-import { Modelo } from "../modelo.js";
-import { CampoW3CSS } from "../w3css/modelow3.js";
+import { Campo, Modelo } from "../modelo.js";
 import { Peticion } from "../request.js";
 
 let modelo = new Modelo('Pokemon');
-modelo.campos.push(new CampoW3CSS('id', 'Id', 'NUMBER' ));
-modelo.campos.push(new CampoW3CSS('name', 'Nombre', 'TEXT'));
-let url = new CampoW3CSS('url', 'Ruta', 'TEXT');
+modelo.campos.push(new Campo('id', 'Id', 'NUMBER' ));
+modelo.campos.push(new Campo('name', 'Nombre', 'TEXT'));
+let url = new Campo('url', 'Ruta', 'TEXT');
 url.setInnerHtml(/*html*/`<img src="{url}" class="w3-image">`);
 modelo.campos.push(url);
 modelo.setId('id');
