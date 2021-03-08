@@ -1,5 +1,5 @@
 import { clonar } from "./json.js";
-import { list } from "./pokemons.js";
+import { list } from "./ejemplos/pokemons.js";
 
 let id = 2;
 
