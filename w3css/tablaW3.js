@@ -1,5 +1,4 @@
 import { Modelo } from "../modelo.js";
-import { Peticion } from "../request.js";
 
 const template = /*html*/`
     <div contenido class="w3-container">
@@ -39,6 +38,7 @@ class TablaW3 extends HTMLElement{
         this.estado = {
             offset: 0,
             limit: 10,
+            total: 0,
             ordenar: {
                 campo: 'none',
                 orden: 'none'
@@ -111,10 +111,15 @@ class TablaW3 extends HTMLElement{
         });
     }
 
-    paginaDatos(inc) {
+    paginaDatos(inc) {        
         let offset = this.estado.offset + inc*this.estado.limit;
-        if (offset < 0) {offset = 0;}
-        this.estado.offset = offset;
+        let dif = this.estado.total - offset;
+        if (dif >=0) {
+            this.estado.offset = offset;
+        }
+        if (this.estado.offset < 0 ) {
+            this.estado.offset = 0;
+        }
         this.despachaEventoEstado();
         this.cargarDatos();
     }
@@ -145,6 +150,7 @@ class TablaW3 extends HTMLElement{
     cargarDatos() {        
         this.onListar(this.estado).then( data => {
             this.loadDatos(data);
+            this.estado.total = data.total;
         });
     }
     /**

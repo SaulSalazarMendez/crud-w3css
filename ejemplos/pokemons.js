@@ -4505,9 +4505,9 @@ export function list(offset = 0, limit = 10, ordenar = {campo: 'none', orden: 'n
       });
    }
    return {
-      count: pokemons.count,
+      total: pokemons.count,
       offset: offset,
-      limit: limit,
+	  limit: limit,	  
       items: items.slice(offset, offset+limit)
    }
 }

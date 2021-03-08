@@ -41,10 +41,9 @@ crud.setOnListar((estado) => {
         let paginacion = `limit/${estado.limit}/offset/${estado.offset}/`;
         let orden = `campo/${estado.ordenar.campo}/orden/${estado.ordenar.orden}`;
         let api = url+uri+servicio+paginacion+orden;
-        console.log(api);
-        peticionGet(api).then(datos => {            
+        peticionGet(api).then(datos => {
             resolve({
-                count:  datos.total,
+                total:  datos.total,
                 offset: datos.offset,
                 limit: datos.limit,
                 items: datos.items
