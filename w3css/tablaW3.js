@@ -158,13 +158,14 @@ class TablaW3 extends HTMLElement{
                 let icono = item.querySelector('#icono');
                 let campo = item.getAttribute('nombre');
                 let clase = 'gg-chevron-up';
-                let orden = 'des';
+                let orden = 'desc';
                 if (icono.classList.contains('gg-chevron-up')) {
                     clase = 'gg-chevron-down'
                     orden = 'asc';
                 } else if (icono.classList.contains('gg-chevron-down')) {
                     clase = 'gg-bolt';
                     orden = 'none';
+                    campo = 'none';
                 }
                 this.removerTitulos(titulos);
                 icono.classList.remove('gg-bolt');

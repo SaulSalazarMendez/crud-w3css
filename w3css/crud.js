@@ -114,7 +114,7 @@ class CrudW3 extends HTMLElement {
         <formulario-crud tema="${this.tema}" ${id}></formulario-crud>
         `;        
         let ver = contenido.querySelector('formulario-crud');
-        ver.carga(this.modelo);
+        ver.carga(this.modelo, this.onVer, this.onEditar, this.onAgregar);
         ver.addEventListener('accion', ev=> {            
             this.analizaEvento(ev);
         });

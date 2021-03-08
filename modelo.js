@@ -23,7 +23,7 @@ export class Campo{
         this.innerHtml = codigo;
     }
 
-    getRules() {        
+    getRules() {
         return this.rules.split('|').join(' ');
     }
 

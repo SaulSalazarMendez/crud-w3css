@@ -27,7 +27,9 @@ const style = /*css*/`
 
 class FormularioW3 extends HTMLElement{
     constructor() {
-        super();
+        super();        
+        this.onEditar = null;
+        this.onAgregar = null;
     }
 
 
@@ -80,7 +82,7 @@ class FormularioW3 extends HTMLElement{
      * 
      * @param {Modelo} modelo 
      */
-    carga(modelo) {
+    carga(modelo, onVer, onEditar, onAgregar) {
         this.modelo = modelo;
         this.tema = this.getAttribute('tema');        
         this.render();
@@ -94,13 +96,14 @@ class FormularioW3 extends HTMLElement{
         let entradas = contenido.querySelectorAll('[entrada]');   
         this.addEventsInputs(contenido, entradas);
         if (this.hasAttribute('id')) {            
-            this.cargaDatos();
+            this.cargaDatos(onVer);
         }
         form.addEventListener('submit', ev => {
             ev.preventDefault();            
-            this.guardaDatos(form);
-            
+            this.guardaDatos(form);            
         });
+        this.onEditar = onEditar;
+        this.onAgregar = onAgregar;
     }
 
     getData(form) {
@@ -119,20 +122,20 @@ class FormularioW3 extends HTMLElement{
         let data = this.getData(form);
         let p = new Peticion();
         if (this.hasAttribute('id')) {
-            p.edit(this.getAttribute('id'), data).then(re => {
+            this.onEditar(this.getAttribute('id'), data).then(re => {
                 this.despachaEvento();
             });
         } else {
-            p.post(data).then(re => {
+            data[this.modelo.id] = null;
+            this.onAgregar(data).then(re => {
                 this.despachaEvento();
             });
         }
         
     }
 
-    cargaDatos() {
-        let p = new Peticion();
-        p.get(this.getAttribute('id')).then(data => {
+    cargaDatos(onVer) {        
+        onVer(this.getAttribute('id')).then(data => {
             this.setDatos(data);
         });
     }
