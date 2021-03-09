@@ -23,6 +23,9 @@ const style = /*css*/`
 [entrada]:invalid {
     background: rgba(255,0,0,0.5) !important;
 }
+[no-visible]{
+    display: none;
+}
 `;
 
 
