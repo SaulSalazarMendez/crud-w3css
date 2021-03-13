@@ -1,19 +1,39 @@
+class InitCampo{
+    constructor(){
+        /**
+         * Nombre del campo en el modelo
+         */
+        this.nombre = '';
+        /**
+         * Etiqueta mostrada
+         */
+        this.etiqueta = '';
+        /**
+         * Tipo de campo
+         * @type {"text"|"number"|"date"|"time"|"textarea"}
+         */
+        this.tipo = '';
+        this.rules = ''; 
+        this.helptext = '';
+        this.innerHtml = null;
+    }
+}
+
+const valorInicial = new InitCampo();
+
 export class Campo{
     /**
      * 
-     * @param {string} nombre 
-     * @param {string} etiqueta 
-     * @param {string} tipo 
-     * @param {string} rules 
-     * @param {string} helptext 
-     */
-    constructor(nombre, etiqueta='', tipo = 'text', rules= '', helptext = '') {        
-        this.nombre = nombre;
-        this.etiqueta = etiqueta
-        this.tipo = tipo;
-        this.rules = rules; 
-        this.helptext = helptext;
-        this.innerHtml = null;
+     * @param {InitCampo} init 
+     */   
+    constructor(init = valorInicial) {
+        this.nombre = '';
+        this.etiqueta = '';
+        this.tipo = '';
+        this.rules = ''; 
+        this.helptext = '';
+        this.innerHtml = null;        
+        Object.assign(this, init);
     }
     /**
      * 
@@ -42,7 +62,7 @@ export class Campo{
     }
 }
 
-class Catalogo{
+class CampoCatalogo extends Campo{
     constructor(catalogo, id) {
         this.id = id;
         this.catalogo = catalogo;
