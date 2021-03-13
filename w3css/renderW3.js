@@ -25,12 +25,22 @@ function noVisible(campo) {
  * 
  * @param {Campo} campo 
  */
+function renderInput(campo) {
+    if (campo.tipo == 'textarea') {
+        return `<textarea class="w3-input w3-border" style="resize:none"  id="${campo.nombre}" name="${campo.nombre}" ${campo.getRules()} entrada class="form-control"></textarea>`;
+    }
+    return `<input type="${campo.tipo}" id="${campo.nombre}" name="${campo.nombre}" ${campo.getRules()} entrada class="w3-input w3-border w3-theme-l5">`;
+}
+/**
+ * 
+ * @param {Campo} campo 
+ */
 export function renderW3(campo) {
     return /*html*/`
     <div class="w3-col m4" ${noVisible(campo)}> 
     <div class="w3-padding">
         <label for="${campo.nombre}" class=""><b>${campo.etiqueta}</b></label>
-        <input type="${campo.tipo}" id="${campo.nombre}" name="${campo.nombre}" ${campo.getRules()} entrada class="w3-input w3-border w3-theme-l5">
+        ${renderInput(campo)}        
         ${getHelpText(campo)}
     </div>               
     </div>
