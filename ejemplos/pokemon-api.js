@@ -4,9 +4,21 @@ import { Campo, Modelo } from "../modelo.js";
 import { Peticion } from "../request.js";
 
 let modelo = new Modelo('Pokemon');
-modelo.campos.push(new Campo('id', 'Id', 'NUMBER' ));
-modelo.campos.push(new Campo('name', 'Nombre', 'TEXT'));
-let url = new Campo('url', 'Ruta', 'TEXT');
+modelo.campos.push(new Campo({
+    nombre:'id',
+    etiqueta: 'Id',
+    tipo: 'number'
+} ));
+modelo.campos.push(new Campo({
+    nombre: 'name',
+    etiqueta: 'Nombre', 
+    tipo: 'text'
+}));
+let url = new Campo({
+    nombre: 'url',
+    etiqueta: 'Ruta',
+    tipo: 'text'
+});
 url.setInnerHtml(/*html*/`<img src="{url}" class="w3-image">`);
 modelo.campos.push(url);
 modelo.setId('id');

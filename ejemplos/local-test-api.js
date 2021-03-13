@@ -24,8 +24,18 @@ function peticionPost(url, dato) {
 }
 
 let modelo = new Modelo('Prueba');
-modelo.campos.push(new Campo('tabla_id', 'Id', 'NUMBER', 'disabled|no-visible'));
-modelo.campos.push(new Campo('log', 'Log', 'TEXT', 'required|pattern="[a-z]{4,}"'));
+modelo.campos.push(new Campo({
+    nombre: 'tabla_id',
+    etiqueta: 'Id', 
+    tipo: 'number',
+    rules: 'disabled|no-visible'
+}));
+modelo.campos.push(new Campo({
+    nombre: 'log', 
+    etiqueta: 'Log', 
+    tipo: 'textarea', 
+    rules: 'required|pattern="[a-z]{4,}"'
+}));
 modelo.setId('tabla_id');
 
 /**
