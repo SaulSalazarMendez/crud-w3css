@@ -1,7 +1,7 @@
 import '../boostrap/crudBo.js';
 import '../w3css/crudW3.js';
 
-import { Campo, Modelo } from "../modelo.js";
+import { Campo, CampoCatalogo, Modelo } from "../modelo.js";
 
 function peticionGet(url) {
     return fetch(url).then(data => {return data.json()});
@@ -66,14 +66,15 @@ crud.setOnListar((estado) => {
 crud.setOnVer((id) => {    
     return new Promise( (resolve, reject) => {
         peticionGet(`http://localhost/saul/php/crud-php/index.php/test/get/id/${id}`)            
-        .then(json => {
+        .then(json => {            
             resolve(json[0]);
         });
     });
 });
 
 crud.setOnEditar( (id, datos) => {
-    return new Promise( (resolve, reject) => {        
+    return new Promise( (resolve, reject) => {
+        resolve(datos);
         peticionPost(`http://localhost/saul/php/crud-php/index.php/test/put/id/${id}`,datos)
         .then(json => {            
             resolve(json);
@@ -89,8 +90,6 @@ crud.setOnAgregar( (datos) => {
         });
     });
 });
-
-crud.setOn
 
 crud.setModelo(modelo);
 
@@ -125,6 +124,25 @@ crudbo.setOnVer((id) => {
         peticionGet(`http://localhost/saul/php/crud-php/index.php/test/get/id/${id}`)            
         .then(json => {
             resolve(json[0]);
+        });
+    });
+});
+
+crudbo.setOnEditar( (id, datos) => {
+    return new Promise( (resolve, reject) => {
+        resolve(datos);
+        peticionPost(`http://localhost/saul/php/crud-php/index.php/test/put/id/${id}`,datos)
+        .then(json => {            
+            resolve(json);
+        });
+    });
+});
+
+crudbo.setOnAgregar( (datos) => {
+    return new Promise( (resolve, reject) => {        
+        peticionPost(`http://localhost/saul/php/crud-php/index.php/test/post`,datos)
+        .then(json => {            
+            resolve(json);
         });
     });
 });
