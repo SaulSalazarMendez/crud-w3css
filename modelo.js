@@ -1,3 +1,13 @@
+class ItemLista{
+    constructor() {
+        /**
+         * @type {any}
+         */
+        this.valor = '';
+        this.etiqueta = '';
+        this.activo = 1;
+    }
+}
 class InitCampo{
     constructor(){
         /**
@@ -61,39 +71,39 @@ export class Campo{
         `;
     }
 }
-
-class CampoCatalogo extends Campo{
-    constructor(catalogo, id) {
-        this.id = id;
-        this.catalogo = catalogo;
+class InitCampoCatalogo extends InitCampo{
+    constructor(){
+        super();
+        /**
+         * @type {[ItemLista]}
+         */      
         this.lista = [];
     }
-    /**
-     * 
-     */
-    load() {
+}
 
+const valorInicialCatalogo = new InitCampoCatalogo();
+export class CampoCatalogo extends Campo{
+    constructor(init = valorInicialCatalogo) {
+        super({});
+        /**
+         * @type {[ItemLista]}
+         */        
+        this.lista = [];
+        Object.assign(this, init);
+        this.tipo = 'select';
     }
     /**
      * id
      */
-    getValor(campo) {
-        let id = this.id;
-        let elemento = this.lista.find(item => {
-            return item[id] == campo;
-        });
+    getValor(valor) {
+        let elemento = this.lista.find(item => item.valor == valor)
         return elemento;
     }
 }
 
-class Relacion {
-    /**
-     * 
-     * @param {string} campo 
-     * @param {Catalogo} catalogo
-     * @param {string} campoDeModelo 
-     */
-    constructor(campo, catalogo, campoDeCatalogo) {
+class CampoRelacion extends CampoCatalogo{    
+    constructor(init) {
+        super({});
         this.campo = campo;
         this.catalogo = catalogo;
         this.campoDeCatalogo = campoDeCatalogo;
