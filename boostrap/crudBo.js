@@ -87,8 +87,7 @@ class CrudBo extends HTMLElement {
         }
         tabla.setOnListar(this.onListar);
         tabla.carga(this.modelo);
-        tabla.addEventListener('accion', ev=> {
-            console.log(ev);
+        tabla.addEventListener('accion', ev=> {            
             this.analizaEvento(ev);
         });
         tabla.addEventListener('estado', ev=> {

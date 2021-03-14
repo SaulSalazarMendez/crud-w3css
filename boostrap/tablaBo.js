@@ -1,4 +1,4 @@
-import { Modelo } from "../modelo.js";
+import { CampoCatalogo, Modelo } from "../modelo.js";
 
 const template = /*html*/`
     <div contenido class="container">
@@ -209,15 +209,29 @@ class TablaBo extends HTMLElement{
         }
         return cadena;
     }
-
+    /**
+     * 
+     * @param {CampoCatalogo} campo 
+     */
+    getValorLista(campo, val) {
+        let elemento = campo.lista.find(item => item.valor == val);
+        if (elemento) {
+            return elemento.etiqueta;
+        }
+        return '';
+    }
     /**
      * 
      * @param {[string]} data 
      */
     renderDataColTabla(data) {
         let out = '';
-        for(let campo of this.modelo.campos) {
-            out += `<td>${ this.validaCadena(data[campo.nombre])}</td>`;
+        for(let campo of this.modelo.campos) {            
+            if (campo instanceof CampoCatalogo) {
+                out += `<td>${ this.getValorLista(campo, data[campo.nombre])}</td>`;
+            } else {
+                out += `<td>${ this.validaCadena(data[campo.nombre])}</td>`;                
+            }
         }
         return out;
     }

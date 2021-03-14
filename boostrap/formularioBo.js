@@ -86,7 +86,6 @@ class FormularioBo extends HTMLElement{
 
     renderModelo(modelo) {
         let out = '';
-        console.log(modelo);
         for(let campo of modelo.campos) {
             out += renderBo(campo);
         }
@@ -108,6 +107,7 @@ class FormularioBo extends HTMLElement{
         let contenido = form.querySelector('div');
         contenido.innerHTML =this.renderModelo(modelo);
         let entradas = contenido.querySelectorAll('[entrada]');   
+        this.initDatos();
         this.addEventsInputs(contenido, entradas);
         if (this.hasAttribute('id')) {            
             this.cargaDatos(onVer);
@@ -153,11 +153,34 @@ class FormularioBo extends HTMLElement{
             this.setDatos(data);
         });
     }
+    /**
+     * 
+     * @param {HTMLSelectElement} sel 
+     * @param {any} val 
+     */
+    selectOption(sel, val) {
+        for(let opt of sel.options) {
+            if (opt.value == val){
+                opt.selected = true;                
+            }
+        }
+    }
+
+    initDatos() {
+        let entradas = this.shadowRoot.querySelectorAll('[entrada]');  
+        for(let campo of entradas) {            
+            campo.value = '';
+        }
+    }
 
     setDatos(data) {
         let entradas = this.shadowRoot.querySelectorAll('[entrada]');  
         for(let campo of entradas) {
-            campo.value = data[campo.name];
+            if  (campo.tagName == 'SELECT') {                
+                this.selectOption(campo, data[campo.name]);
+            } else {
+                campo.value = data[campo.name];
+            }
             this.validaInput(campo);
         }
     }
