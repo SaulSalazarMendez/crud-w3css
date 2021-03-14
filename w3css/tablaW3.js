@@ -1,4 +1,4 @@
-import { Modelo } from "../modelo.js";
+import { Campo, CampoCatalogo, Modelo } from "../modelo.js";
 
 const template = /*html*/`
     <div contenido class="w3-container">
@@ -203,7 +203,17 @@ class TablaW3 extends HTMLElement{
         }
         return cadena;
     }
-
+    /**
+     * 
+     * @param {CampoCatalogo} campo 
+     */
+    getValorLista(campo, val) {
+        let elemento = campo.lista.find(item => item.valor == val);
+        if (elemento) {
+            return elemento.etiqueta;
+        }
+        return '';
+    }
     /**
      * 
      * @param {[string]} data 
@@ -211,7 +221,11 @@ class TablaW3 extends HTMLElement{
     renderDataColTabla(data) {
         let out = '';
         for(let campo of this.modelo.campos) {
-            out += `<td>${ this.validaCadena(data[campo.nombre])}</td>`;
+            if (campo instanceof CampoCatalogo) {
+                out += `<td>${ this.getValorLista(campo, data[campo.nombre])}</td>`;
+            } else {
+                out += `<td>${ this.validaCadena(data[campo.nombre])}</td>`;                
+            }
         }
         return out;
     }

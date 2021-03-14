@@ -1,4 +1,4 @@
-import { Modelo } from "../modelo.js";
+import { CampoCatalogo, Modelo } from "../modelo.js";
 import { Peticion } from "../request.js";
 
 const template = /*html*/`
@@ -29,6 +29,17 @@ class VerW3 extends HTMLElement{
     }
     /**
      * 
+     * @param {CampoCatalogo} campo 
+     */
+    getValorLista(campo, val) {
+        let elemento = campo.lista.find(item => item.valor == val);
+        if (elemento) {
+            return elemento.etiqueta;
+        }
+        return '';
+    }
+    /**
+     * 
      * @param {Modelo} modelo 
      */
     carga(modelo, onVer) {
@@ -46,6 +57,9 @@ class VerW3 extends HTMLElement{
             let text = campo.innerHtml + '';
             let reg = new RegExp(`{${campo.nombre}}`, 'g');
             return text.replace(reg, data[campo.nombre]);
+        }        
+        if (campo instanceof CampoCatalogo) {
+            return this.getValorLista(campo, data[campo.nombre]);
         }
         return data[campo.nombre];
     }
