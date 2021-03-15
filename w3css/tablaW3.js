@@ -128,6 +128,10 @@ class TablaW3 extends HTMLElement{
 
     addEventoNuevo() {
         let nuevo = this.shadowRoot.querySelector('h5');
+        if (!this.acciones.agregar) {
+            nuevo.remove();
+            return;
+        }
         nuevo.addEventListener('click', ev=>{
             let evento = new CustomEvent('accion', {
                 detail: {
