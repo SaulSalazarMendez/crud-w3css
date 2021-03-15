@@ -1,4 +1,4 @@
-import '../w3css/crudW3.js';
+import '../boostrap/crudBo.js';
 
 import { Campo, Modelo } from "../modelo.js";
 import { Peticion } from "../request.js";
@@ -7,7 +7,7 @@ let modelo = new Modelo('Pokemon');
 modelo.campos.push(new Campo({
     nombre:'id',
     etiqueta: 'Id',
-    tipo: 'number'
+    tipo: 'number' 
 } ));
 modelo.campos.push(new Campo({
     nombre: 'name',
@@ -17,14 +17,15 @@ modelo.campos.push(new Campo({
 let url = new Campo({
     nombre: 'url',
     etiqueta: 'Ruta',
-    tipo: 'text'
+    tipo: 'text',
+    ancho: '12'
 });
 url.setInnerHtml(/*html*/`<img src="{url}" class="w3-image">`);
 modelo.campos.push(url);
 modelo.setId('id');
 
 
-let crud = document.querySelector('crud-w3css');
+let crud = document.querySelector('crud-bo');
 crud.setAcciones({editar: false, eliminar:false});
 crud.setOnListar((estado) => {    
     return new Promise( (resolve,reject) => {
