@@ -66,18 +66,32 @@ class VerBo extends HTMLElement{
         }
         return data[campo.nombre];
     }
+    
+    validaNoVisible(campo) {        
+        if (campo.getReglas().indexOf('no-visible')>=0){
+            return true;
+        }
+        return false;
+    }
 
     loadDato(data) {
         let contenido = this.shadowRoot.querySelector('[contenido]');
-        let out = '';
+        let out = '<div class="row">';
         for(let campo of this.modelo.campos) {
-            out+= /*html*/`
-                <label class=""><b>${campo.etiqueta}</b></label>
-                <div class="border">${this.getDato(data, campo)}</div>                
-            `;
+            if (!this.validaNoVisible(campo)){
+                out+= /*html*/`
+                    <div class="col-sm-${campo.ancho}">
+                    <label class=""><b>${campo.etiqueta}</b></label>
+                    <div class="border">${this.getDato(data, campo)}</div>                
+                    </div>
+                `;
+            }
         }
-        out += `            
-            <button class="btn btn-secondary float-right btn-sm" style="margin-top: 8px;">Cancelar</button>
+        out += `   
+            <div class="col-sm-12">         
+                <button class="btn btn-secondary float-right btn-sm" style="margin-top: 8px;">Cancelar</button>
+            </div>
+            </div>
         `;
         contenido.innerHTML = /*html*/`
             ${out}

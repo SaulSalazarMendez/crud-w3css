@@ -1,4 +1,4 @@
-import { CampoCatalogo, Modelo } from "../modelo.js";
+import { CampoCatalogo, Campo, Modelo } from "../modelo.js";
 
 const template = /*html*/`
     <div contenido class="container">
@@ -20,6 +20,9 @@ const style = `
 @import url('https://css.gg/chevron-down.css');
 @import url('https://css.gg/chevron-up.css');
 @import url('https://css.gg/bolt.css');
+.hide {
+    display: none;
+}
 `;
 
 
@@ -194,7 +197,7 @@ class TablaBo extends HTMLElement{
         let titulo = this.shadowRoot.querySelector('[titulo]');
         let out = '';
         for(let campo of this.modelo.campos) {
-            out += /*html*/`<th titulo nombre="${campo.nombre}">
+            out += /*html*/`<th titulo nombre="${campo.nombre}" ${this.validaNoVisible(campo)}>
             <span class="float-left">${campo.etiqueta}</span>
             <i id="icono" class="float-right gg-bolt"></i> </th>`;
         }
@@ -222,15 +225,25 @@ class TablaBo extends HTMLElement{
     }
     /**
      * 
+     * @param {Campo} campo 
+     */
+    validaNoVisible(campo) {        
+        if (campo.getReglas().indexOf('no-visible')>=0){
+            return 'class="hide"';
+        }
+        return '';
+    }
+    /**
+     * 
      * @param {[string]} data 
      */
     renderDataColTabla(data) {
         let out = '';
         for(let campo of this.modelo.campos) {            
             if (campo instanceof CampoCatalogo) {
-                out += `<td>${ this.getValorLista(campo, data[campo.nombre])}</td>`;
+                out += `<td ${this.validaNoVisible(campo)}>${ this.getValorLista(campo, data[campo.nombre])}</td>`;
             } else {
-                out += `<td>${ this.validaCadena(data[campo.nombre])}</td>`;                
+                out += `<td ${this.validaNoVisible(campo)}>${ this.validaCadena(data[campo.nombre])}</td>`;                
             }
         }
         return out;

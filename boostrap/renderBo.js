@@ -16,7 +16,7 @@ function getHelpText(campo) {
  * @param {Campo} campo 
  */
 function noVisible(campo) {
-    if (campo.getRules().indexOf('no-visible')>=0) {
+    if (campo.getReglas().indexOf('no-visible')>=0) {
         return 'no-visible';
     }
     return '';
@@ -42,16 +42,16 @@ function renderOptions(campo) {
  */
 function renderInput(campo) {
     if (campo.tipo == 'textarea') {
-        return `<textarea rows="3" style="resize:none"  id="${campo.nombre}" name="${campo.nombre}" ${campo.getRules()} entrada class="form-control"></textarea>`;
+        return `<textarea rows="3" style="resize:none"  id="${campo.nombre}" name="${campo.nombre}" ${campo.getReglas()} entrada class="form-control"></textarea>`;
     }
     if (campo instanceof CampoCatalogo) {
         return `
-            <select class="form-control" id="${campo.nombre}" name="${campo.nombre}" ${campo.getRules()} entrada>
+            <select class="form-control" id="${campo.nombre}" name="${campo.nombre}" ${campo.getReglas()} entrada>
                 ${renderOptions(campo)}
             </select>
         `;
     }
-    return `<input type="${campo.tipo}" id="${campo.nombre}" name="${campo.nombre}" ${campo.getRules()} entrada class="form-control">`;
+    return `<input type="${campo.tipo}" id="${campo.nombre}" name="${campo.nombre}" ${campo.getReglas()} entrada class="form-control">`;
 }
 /**
  * 
@@ -59,7 +59,7 @@ function renderInput(campo) {
  */
 export function renderBo(campo) {
     return /*html*/`
-    <div class="col-sm-4" ${noVisible(campo)}> 
+    <div class="col-sm-${campo.ancho}" ${noVisible(campo)}> 
     <div class="form-group">
         <label for="${campo.nombre}" class=""><b>${campo.etiqueta}</b></label>
         ${renderInput(campo)}
