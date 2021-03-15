@@ -23,6 +23,11 @@ class InitCampo{
          * @type {"text"|"number"|"date"|"time"|"textarea"}
          */
         this.tipo = '';
+        /**
+        * Validaciones html 5 del campo. Todas separados por |. Esta agregada la no-visible.
+        * @example
+        * reglas: 'required|pattern="[a-z]{4}"'
+        */
         this.reglas = ''; 
         this.helptext = '';
         this.innerHtml = null;
