@@ -14,23 +14,19 @@ modelo.campos.push(new Campo({
     nombre: 'id_persona',
     etiqueta: 'Id', 
     tipo: 'number',
-    rules: 'disabled|no-visible'
+    reglas: 'disabled|no-visible'
 }));
 modelo.campos.push(new Campo({
     nombre: 'nombre', 
     etiqueta: 'Nombre', 
     tipo: 'text', 
-    rules: 'required|pattern="[a-zA-Z ]{4,}"'
+    reglas: 'required|pattern="[a-zA-Z ]{4,}"'
 }));
 let campoSexo = new CampoCatalogo({
     nombre: 'sexo_id', 
     etiqueta: 'Sexo',   
-    rules: 'required',
-    lista: [
-        {valor: '', etiqueta: 'Seleccione una opcion', activo: 0},
-        {valor: 0, etiqueta: 'Hombre'},
-        {valor: 1, etiqueta: 'Mujer'},
-    ]    
+    reglas: 'required',
+    ancho: '12'      
 });
 modelo.campos.push(campoSexo);
 modelo.setId('id_persona');
