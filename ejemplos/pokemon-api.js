@@ -1,4 +1,4 @@
-import '../boostrap/crudBo.js';
+import '../w3css/crudW3.js';
 
 import { Campo, Modelo } from "../modelo.js";
 import { Peticion } from "../request.js";
@@ -25,8 +25,8 @@ modelo.campos.push(url);
 modelo.setId('id');
 
 
-let crud = document.querySelector('crud-bo');
-crud.setAcciones({editar: false, eliminar:false});
+let crud = document.querySelector('crud-w3css');
+crud.setAcciones({editar: false, eliminar:false, agregar: false});
 crud.setOnListar((estado) => {    
     return new Promise( (resolve,reject) => {
         let p = new Peticion();
