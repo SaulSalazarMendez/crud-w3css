@@ -4492,7 +4492,7 @@ export function list(offset = 0, limit = 10, ordenar = {campo: 'none', orden: 'n
          // a must be equal to b
          return 0;
       });
-   } else if (ordenar.orden == 'des') {
+   } else if (ordenar.orden == 'desc') {
       items.sort(function (a, b) {
          if (a[ordenar.campo] > b[ordenar.campo]) {
            return -1;
