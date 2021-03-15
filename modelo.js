@@ -23,9 +23,13 @@ class InitCampo{
          * @type {"text"|"number"|"date"|"time"|"textarea"}
          */
         this.tipo = '';
-        this.rules = ''; 
+        this.reglas = ''; 
         this.helptext = '';
         this.innerHtml = null;
+        /**
+         * ancho en el grid, por defecto 4. 
+         */
+        this.ancho = '';
     }
 }
 
@@ -37,12 +41,31 @@ export class Campo{
      * @param {InitCampo} init 
      */   
     constructor(init = valorInicial) {
+        /**
+         * nombre del campo. 
+         */
         this.nombre = '';
+        /**
+         * Etiqueta mostrada en el crud.
+         */
         this.etiqueta = '';
+        /**
+         * Tipo de campo
+         * @type {"text"|"number"|"date"|"time"|"textarea"}
+         */
         this.tipo = '';
-        this.rules = ''; 
+        /**
+        * Validaciones html 5 del campo. Todas separados por |. Esta agregada la no-visible.
+        * @example
+        * reglas: 'required|pattern="[a-z]{4}"'
+        */
+        this.reglas = ''; 
         this.helptext = '';
-        this.innerHtml = null;        
+        this.innerHtml = null;
+        /**
+         * ancho en el grid, por defecto 4. 
+         */
+        this.ancho = '4';
         Object.assign(this, init);
     }
     /**
@@ -53,8 +76,8 @@ export class Campo{
         this.innerHtml = codigo;
     }
 
-    getRules() {
-        return this.rules.split('|').join(' ');
+    getReglas() {
+        return this.reglas.split('|').join(' ');
     }
 
     getHelpText() {
@@ -67,7 +90,7 @@ export class Campo{
     render() {
         return /*html*/`
         <label for="${this.nombre}"><b>${this.etiqueta}</b></label><br>
-        <input type="${this.tipo}" id="${this.nombre}" name="${this.nombre}" ${this.getRules()} entrada><br>        
+        <input type="${this.tipo}" id="${this.nombre}" name="${this.nombre}" ${this.getReglas()} entrada><br>        
         `;
     }
 }
