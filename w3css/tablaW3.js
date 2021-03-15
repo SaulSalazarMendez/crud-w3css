@@ -190,7 +190,7 @@ class TablaW3 extends HTMLElement{
         let titulo = this.shadowRoot.querySelector('[titulo]');
         let out = '';
         for(let campo of this.modelo.campos) {
-            out += /*html*/`<th class="w3-hover-theme" titulo nombre="${campo.nombre}">${campo.etiqueta} <i id="icono" class="w3-right gg-bolt"></i> </th>`;
+            out += /*html*/`<th class="w3-hover-theme ${this.validaNoVisible(campo)}" titulo nombre="${campo.nombre}">${campo.etiqueta} <i id="icono" class="w3-right gg-bolt"></i> </th>`;
         }
         out += '<th class="w3-hover-theme">Acciones</th>';
         titulo.innerHTML = out;
@@ -216,15 +216,25 @@ class TablaW3 extends HTMLElement{
     }
     /**
      * 
+     * @param {Campo} campo 
+     */
+    validaNoVisible(campo) {        
+        if (campo.getReglas().indexOf('no-visible')>=0){
+            return 'w3-hide';
+        }
+        return '';
+    }
+    /**
+     * 
      * @param {[string]} data 
      */
     renderDataColTabla(data) {
         let out = '';
         for(let campo of this.modelo.campos) {
             if (campo instanceof CampoCatalogo) {
-                out += `<td>${ this.getValorLista(campo, data[campo.nombre])}</td>`;
+                out += `<td class="${this.validaNoVisible(campo)}">${ this.getValorLista(campo, data[campo.nombre])}</td>`;
             } else {
-                out += `<td>${ this.validaCadena(data[campo.nombre])}</td>`;                
+                out += `<td class="${this.validaNoVisible(campo)}">${ this.validaCadena(data[campo.nombre])}</td>`;                
             }
         }
         return out;

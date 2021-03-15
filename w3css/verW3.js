@@ -64,17 +64,31 @@ class VerW3 extends HTMLElement{
         return data[campo.nombre];
     }
 
+    validaNoVisible(campo) {        
+        if (campo.getReglas().indexOf('no-visible')>=0){
+            return true;
+        }
+        return false;
+    }
+
     loadDato(data) {
         let contenido = this.shadowRoot.querySelector('[contenido]');
-        let out = '';
+        let out = '<div clasS="w3-row">';
         for(let campo of this.modelo.campos) {
-            out+= /*html*/`
-                <label class=""><b>${campo.etiqueta}</b></label>
-                <div class="w3-border">${this.getDato(data, campo)}</div>                
-            `;
+            if (!this.validaNoVisible(campo)){
+                out+= /*html*/`
+                    <div class="w3-col m${campo.ancho}">
+                    <label class=""><b>${campo.etiqueta}</b></label>
+                    <div class="w3-border">${this.getDato(data, campo)}</div>                
+                    </div>
+                `;
+            }
         }
         out += `
-            <button class="w3-btn w3-theme-action w3-margin-top w3-right">Cancelar</button>
+            <div class="w3-col m12">
+                <button class="w3-btn w3-theme-action w3-margin-top w3-right">Cancelar</button>
+            </div>
+            </div>
         `;
         contenido.innerHTML = /*html*/`
             ${out}
