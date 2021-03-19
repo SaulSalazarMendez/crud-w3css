@@ -51,7 +51,7 @@ function renderInput(campo) {
             </select>
         `;
     }
-    return `<input type="${campo.tipo}" id="${campo.nombre}" name="${campo.nombre}" ${campo.getReglas()} entrada class="w3-input w3-border w3-theme-l5">`;
+    return `<input type="${campo.tipo}" id="${campo.nombre}" name="${campo.nombre}" ${campo.getReglas()} entrada class="w3-input w3-border w3-theme-l5" placeholder="${campo.placeholder}">`;
 }
 /**
  * 

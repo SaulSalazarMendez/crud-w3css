@@ -31,6 +31,8 @@ class InitCampo{
         this.reglas = ''; 
         this.helptext = '';
         this.innerHtml = null;
+
+        this.placeholder = '';
         /**
          * ancho en el grid, por defecto 4. 
          */
@@ -67,6 +69,7 @@ export class Campo{
         this.reglas = ''; 
         this.helptext = '';
         this.innerHtml = null;
+        this.placeholder = '';
         /**
          * ancho en el grid, por defecto 4. 
          */

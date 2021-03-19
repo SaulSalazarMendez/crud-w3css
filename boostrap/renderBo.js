@@ -51,7 +51,7 @@ function renderInput(campo) {
             </select>
         `;
     }
-    return `<input type="${campo.tipo}" id="${campo.nombre}" name="${campo.nombre}" ${campo.getReglas()} entrada class="form-control">`;
+    return `<input type="${campo.tipo}" id="${campo.nombre}" name="${campo.nombre}" ${campo.getReglas()} entrada class="form-control" placeholder="${campo.placeholder}">`;
 }
 /**
  * 
