@@ -20,7 +20,8 @@ modelo.campos.push(new Campo({
     nombre: 'nombre', 
     etiqueta: 'Nombre', 
     tipo: 'text', 
-    reglas: 'required|pattern="[a-zA-Z ]{4,}"'
+    reglas: 'required|pattern="[a-zA-Z ]{4,}"',
+    placeholder: 'Poner nombre'
 }));
 let campoSexo = new CampoCatalogo({
     nombre: 'sexo_id', 
